@@ -14,3 +14,8 @@ def current_weather(city: str):
 @app.get("/weather/forecast")
 def forecast_weather(city: str):
     return get_forecast_weather(city)
+
+# Required for Vercel
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
