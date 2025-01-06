@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; padding: 0; }
+        h1 { color: #007BFF; }
+        form { margin-bottom: 20px; }
+        input, button { padding: 10px; }
+        .forecast-item { border: 1px solid #ccc; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🌦️ Weather App</h1>
+    
+    <!-- Form for Current Weather -->
+    <form action="/weather/current" method="get">
+        <input type="text" name="city" placeholder="Enter City Name" required>
+        <button type="submit">Get Current Weather</button>
+    </form>
+
+    <!-- Form for Forecast Weather -->
+    <form action="/weather/forecast" method="get">
+        <input type="text" name="city" placeholder="Enter City Name" required>
+        <button type="submit">Get Forecast Weather</button>
+    </form>
+
+    <!-- Display Current Weather -->
+    {% if weather %}
+        <h2>Weather in {{ city }}</h2>
+        <p>🌡️ Temperature: {{ weather['main']['temp'] }} K</p>
+        <p>🌥️ Description: {{ weather['weather'][0]['description'] }}</p>
+    {% endif %}
+
+    <!-- Display Weather Forecast -->
+    {% if forecast %}
+        <h2>5-Day Weather Forecast for {{ city }}</h2>
+        {% for item in forecast['list'] %}
+            <div class="forecast-item">
+                <p><strong>Date & Time:</strong> {{ item.dt_txt }}</p>
+                <p>🌡️ Temperature: {{ item.main.temp }} K</p>
+                <p>🌥️ Weather: {{ item.weather[0].description }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
